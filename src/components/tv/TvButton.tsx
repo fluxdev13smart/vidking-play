@@ -1,10 +1,10 @@
-import { forwardRef, type ButtonHTMLAttributes } from "react";
-import { motion, useReducedMotion } from "motion/react";
+import { forwardRef } from "react";
+import { motion, useReducedMotion, type HTMLMotionProps } from "motion/react";
 import { cn } from "@/lib/utils";
 
 type Variant = "primary" | "glass" | "ghost";
 
-interface TvButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface TvButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
   variant?: Variant;
   size?: "md" | "lg";
 }
@@ -22,16 +22,20 @@ const variants: Record<Variant, string> = {
 export const TvButton = forwardRef<HTMLButtonElement, TvButtonProps>(
   ({ className, variant = "glass", size = "md", ...props }, ref) => {
     const reduced = useReducedMotion();
-    const spring = { type: "spring" as const, bounce: 0, duration: 0.35 };
+    const motionProps: HTMLMotionProps<"button"> = reduced
+      ? {}
+      : {
+          // Feedback lives on the press, instantly — not on release.
+          whileTap: { scale: 0.96 },
+          whileHover: { scale: 1.02 },
+          whileFocus: { scale: 1.02 },
+          transition: { type: "spring", bounce: 0, duration: 0.35 },
+        };
 
     return (
       <motion.button
         ref={ref}
-        // Feedback lives on the press, instantly — not on release.
-        whileTap={reduced ? undefined : { scale: 0.96 }}
-        whileHover={reduced ? undefined : { scale: 1.02 }}
-        whileFocus={reduced ? undefined : { scale: 1.02 }}
-        transition={spring}
+        {...motionProps}
         className={cn(
           "inline-flex select-none items-center justify-center gap-2 rounded-2xl font-medium",
           "outline-none disabled:pointer-events-none disabled:opacity-50",
@@ -39,7 +43,7 @@ export const TvButton = forwardRef<HTMLButtonElement, TvButtonProps>(
           variants[variant],
           className,
         )}
-        {...(props as React.ComponentProps<typeof motion.button>)}
+        {...props}
       />
     );
   },
