@@ -120,7 +120,7 @@ function Watch() {
 
   const goEpisode = (delta: number) => {
     const nextEpisode = Math.max(1, episode + delta);
-    navigate({ to: "/watch", search: { type, id, season, episode: nextEpisode } });
+    navigate({ to: "/watch", search: { type, id: numericId, season, episode: nextEpisode } });
   };
 
   return (
