@@ -34,6 +34,20 @@ export const Route = createFileRoute("/")({
 
 const spring = { type: "spring" as const, bounce: 0, duration: 0.45 };
 
+// Enter and exit along the same path (spatial consistency).
+const slideIn = {
+  initial: { opacity: 0, x: 24 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: 24 },
+};
+
+const lift = {
+  whileHover: { scale: 1.02 },
+  whileFocus: { scale: 1.02 },
+  whileTap: { scale: 0.97 },
+};
+
+
 function Home() {
   const navigate = useNavigate();
   const reduced = useReducedMotion();
