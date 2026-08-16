@@ -134,9 +134,7 @@ function Home() {
               <>
                 <motion.div
                   key="season"
-                  initial={reduced ? false : { opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={reduced ? undefined : { opacity: 0, x: 24 }}
+                  {...(reduced ? {} : slideIn)}
                   transition={spring}
                 >
                   <Field label="Season">
@@ -145,15 +143,14 @@ function Home() {
                 </motion.div>
                 <motion.div
                   key="episode"
-                  initial={reduced ? false : { opacity: 0, x: 24 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={reduced ? undefined : { opacity: 0, x: 24 }}
+                  {...(reduced ? {} : slideIn)}
                   transition={{ ...spring, delay: 0.04 }}
                 >
                   <Field label="Episode">
                     <NumberInput value={episode} onChange={setEpisode} />
                   </Field>
                 </motion.div>
+
               </>
             )}
           </AnimatePresence>
