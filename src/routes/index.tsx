@@ -71,7 +71,7 @@ function Home() {
       to: "/watch",
       search: {
         type: over?.mediaType ?? mediaType,
-        id: nextId,
+        id: Number(nextId),
         season: over?.season ?? (Number(season) || 1),
         episode: over?.episode ?? (Number(episode) || 1),
       },
