@@ -194,11 +194,10 @@ function Home() {
                 initial={reduced ? false : { opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ ...spring, delay: 0.04 * i }}
-                whileHover={reduced ? undefined : { scale: 1.02 }}
-                whileFocus={reduced ? undefined : { scale: 1.02 }}
-                whileTap={reduced ? undefined : { scale: 0.97 }}
+                {...(reduced ? {} : lift)}
                 className="glass-panel rounded-3xl p-5 text-left outline-none"
               >
+
                 <div className="flex items-center gap-2 text-xs font-semibold tracking-widest text-accent uppercase">
                   {r.mediaType === "movie" ? (
                     <Film className="size-4" />
