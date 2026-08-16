@@ -51,18 +51,19 @@ function Home() {
   const idValid = /^\d{1,9}$/.test(tmdbId.trim());
 
   const play = (over?: Partial<SavedProgress>) => {
-    const id = (over?.tmdbId ?? tmdbId).trim();
-    if (!/^\d{1,9}$/.test(id)) return;
+    const nextId = (over?.tmdbId ?? tmdbId).trim();
+    if (!/^\d{1,9}$/.test(nextId)) return;
     navigate({
       to: "/watch",
       search: {
         type: over?.mediaType ?? mediaType,
-        id,
-        season: over?.season ?? Number(season) || 1,
-        episode: over?.episode ?? Number(episode) || 1,
+        id: nextId,
+        season: over?.season ?? (Number(season) || 1),
+        episode: over?.episode ?? (Number(episode) || 1),
       },
     });
   };
+
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-6xl px-6 py-12 sm:px-10 sm:py-16">
