@@ -17,9 +17,11 @@ import {
 const searchSchema = z.object({
   type: z.enum(["movie", "tv"]).default("movie"),
   id: z
-    .string()
-    .regex(/^\d{1,9}$/)
+    .union([z.string(), z.number()])
+    .transform((v) => String(v))
+    .refine((v) => /^\d{1,9}$/.test(v))
     .default("1078605"),
+
   season: z.coerce.number().int().min(1).default(1),
   episode: z.coerce.number().int().min(1).default(1),
 });
