@@ -45,7 +45,8 @@ export const Route = createFileRoute("/watch")({
 const spring = { type: "spring" as const, bounce: 0, duration: 0.45 };
 
 function Watch() {
-  const { type, id, season, episode } = Route.useSearch();
+  const { type, id: numericId, season, episode } = Route.useSearch();
+  const id = String(numericId);
   const navigate = useNavigate();
   const reduced = useReducedMotion();
   const [status, setStatus] = useState<"idle" | "playing" | "paused" | "ended">("idle");
@@ -54,6 +55,7 @@ function Watch() {
   const latest = useRef(position);
 
   const key = progressKey({ mediaType: type, tmdbId: id, season, episode });
+
 
   // Resolve the resume point once per title, before the iframe mounts.
   useEffect(() => {
